@@ -30,19 +30,10 @@
   .cta{display:inline-block;margin-top:32px;background:var(--ink);color:var(--amber);padding:17px 34px;font:700 14px/1 var(--display);text-transform:uppercase;letter-spacing:.1em;text-decoration:none}
   .cta:hover{background:#000}
 
-  /* halftone poster block standing in for the apprentice portrait */
+  /* halftone apprentice portrait; multiply turns its paper white amber */
   .half{
-    aspect-ratio:3/4;border:4px solid var(--ink);position:relative;overflow:hidden;
-    background:
-      radial-gradient(circle at 30% 28%, var(--ink) 0 18%, transparent 19%),
-      radial-gradient(circle at 68% 62%, var(--ink) 0 26%, transparent 27%),
-      radial-gradient(circle at 1.5px 1.5px, rgba(18,21,28,.85) 1.4px, transparent 0);
-    background-size:100% 100%,100% 100%,7px 7px;
-  }
-  .half::after{
-    content:"⚒";position:absolute;inset:0;display:grid;place-items:center;
-    font-size:clamp(70px,10vw,130px);color:var(--amber);
-    text-shadow:0 0 0 var(--amber);
+    display:block;width:100%;aspect-ratio:1008/1312;object-fit:cover;
+    border:4px solid var(--ink);mix-blend-mode:multiply;
   }
 
   .steps{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:4px solid var(--ink)}
@@ -95,7 +86,7 @@
       <p>A 5 minute test tells you which skilled trade fits how you actually work. Then it names the Chicagoland programs that will take you, and the ones that pay you while you train.</p>
       <a class="cta" href="/">Take the test</a>
     </div>
-    <div class="half" role="img" aria-label="Halftone print-shop graphic"></div>
+    <img class="half" src="broadside-portrait.jpg" width="1008" height="1312" loading="eager" alt="Halftone portrait of an apprentice electrician with a toolbelt">
   </section>
 
   <section class="steps">
