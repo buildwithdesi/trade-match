@@ -1,8 +1,14 @@
-# Trade Match — Brand Kit
+# TradePath Chicago — Brand Kit (Claude Team 6)
 
-> Paste this into any Claude session before generating designs, slides, graphics, or copy for Trade Match. Everything should come out looking like one product.
+> Paste this into any Claude session before generating designs, slides, graphics, or copy. Everything should come out looking like one product.
 
-## Identity in one sentence
+## Two surfaces, one amber
+
+- **The master app (`index.html`, Spenser's build)** is LIGHT: ink-dark header (`#12151c`), paper background (`#f7f8fa`), white cards, the same amber (`#f5a623`) as the single accent, green for "pays you," purple for local notes, red for warnings. Match it for slides and site graphics.
+- **The fit test + original Trade Match surfaces** are DARK (below). Match them for moody promo shots and the standalone test.
+- The amber is the brand constant across both. Logo mark: amber square with ▲, wordmark "TradePath" + small "CHICAGOLAND".
+
+## Dark surface identity (fit test / original Trade Match)
 
 Trade Match looks like a well-organized job site at dusk: dark, warm, amber worklight glow, zero fluff.
 

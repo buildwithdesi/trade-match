@@ -1,63 +1,63 @@
-# Trade Match — 2-Minute Demo Script (Morgan)
+# TradePath Chicago — 2-Minute Demo Script (Morgan)
 
-> Written to be read aloud. Timed beats on the left. Practice once with a timer; it lands at about 1:55.
-> Pro move: the quiz has keyboard shortcuts. Pressing A, B, C, or D answers and auto-advances. You can fly through the questions while talking.
+> Read aloud, timed beats on the left. Practice once with a timer; target is 2:00 flat.
+> Keyboard shortcuts carry the demo: on the fit test, pressing A/B/C/D answers and auto-advances. You can fly while talking.
 
 ## Setup before you're on
 
-- Open `trade-match.html` in the browser, full screen, on the intro page.
-- Keep the ANSWER KEY (bottom of this file) on your phone or a sticky note.
+- Open `index.html`, on the home page, browser full screen. Wifi connected if possible (the live panel is the wow moment), but the demo survives offline.
+- Answer key on your phone or a sticky note (bottom of this file).
 
 ## The script
 
-**[0:00 — the setup, on the intro screen]**
+**[0:00 — home page]**
 
-"Meet a software engineer. Fifteen years in. Last month her company announced an AI restructuring, and she's asking the question half this city is asking: will I have a job next year?
+"Chicago asked what AI is doing to our jobs. Team 6 built the off-ramp.
 
-She's heard the trades pay well. But which one? Electrician? HVAC? She can't quit and gamble on trade school to find out. So she takes five minutes and does this."
+Meet a software engineer, fifteen years in, watching AI circle her industry. She's heard the trades pay. But which one? And who pays for the training? Two questions, and this answers both, in order."
 
-**[0:20 — click START, answer fast using the answer key, narrate over it]**
+**[0:15 — click "I don't know what trade I want," type the answer key while talking]**
 
-*(Type the answer letters from the key below. Don't read every question. Talk over your typing:)*
+"First: twenty questions about how she actually works. Not what she knows. Is she okay eighty feet up? Does she want the same shop every day or three sites before lunch? Would she rather build something or diagnose why it broke? Sixteen trades, real federal pay data, and an engine built so the honest answer wins."
 
-"Twenty questions. Not about what she knows, about how she works. Look at these: Is she okay 80 feet up on a steel beam? Does she want to end the day filthy or clean? Does she want the same site for eight months or three service calls a day? Would she rather build something or figure out why something's broken?
+**[1:00 — results land. Pause one beat.]**
 
-No right answers. It's measuring fifteen traits: precision, risk, people tolerance, love of diagnostics. She's answering honestly, because nobody's grading her."
+"Elevator technician. Highest-paid trade in the city: $106K median. And look at this green panel: that's the City of Chicago's own permit data, fetched LIVE, right now, no key, no server. 296 elevator permits pulled in the last 90 days. Otis alone pulled 46. Near North Side, the Loop, Near West Side. Those names come off real building permits. That's who you walk up to.
 
-**[1:05 — results appear. Pause one beat. Let the room read it.]**
+And the purple box already told her the door in: the union apprenticeship, and that it pays HER to train."
 
-"And there it is. Elevator technician. The highest-paid trade in America: $106,000 median, top ten percent over $149,000. Growing faster than average. AI cannot climb into a hoistway.
+**[1:25 — click "Find the programs that will take me," answer the six eligibility questions fast]**
 
-And look, it tells her WHY: she's precise, she loves troubleshooting puzzles, she likes systems and code, and she'd rather work indoors. That's her, mapped from her own answers. Real Bureau of Labor Statistics data, the real way in, what it does to your body, and an honest warning before she commits."
+"Now the part every other trade quiz skips. Six questions: her county, her age, her education, her situation. Because the fifty million dollars a year that funds trades training in Chicagoland is scattered across forty agencies, and the eligibility rules differ on every axis."
 
-**[1:35 — the stage-3 reveal. This is the money moment.]**
+**[1:40 — program results]**
 
-"But here's the part that makes this a business and not a quiz.
+"And there it is: the programs that will actually take her, ranked. Green tags mean she gets PAID while she trains. It flags what's open right now, because these windows close: Plumbers 130 opens in November, one union registers Wednesday mornings only. If one fixable thing blocks her, it names the program that fixes the blocker."
 
-Next step: we pair her with a working tradesperson in her neighborhood. She pays two thousand dollars to spend a month on the job before she commits to anything. He gets a second income teaching what he already does every day. She finds out if this life is for her — for a tenth of what a wrong year of tuition costs.
+**[1:50 — click through to My Plan]**
 
-Money into a local tradesperson's pocket. A neighbor saved from a twenty-thousand-dollar mistake."
+"It ends in one printable page: her trade, her three programs, the money to apply for BEFORE she enrolls anywhere, and a checklist for the next seven days.
 
-**[1:50 — the close]**
+We built this today, as a team, with Claude. It runs on a phone. Take the test."
 
-"Chicago asked what AI is doing to our jobs. This is AI building the off-ramp. It's five minutes. It runs on your phone. Take the test."
+*(Stop. Nothing after the close.)*
 
-*(Stop. Don't add anything after the close.)*
+## Answer key (fit test, type these letters)
 
-## Answer key (type these letters, in order)
-
-Target result: a high-pay diagnostic trade (Elevator Technician / Aircraft Mechanic / Industrial Maintenance top 3).
+Lands **Elevator Installer / Repairer** (verified today, ~75% fit, live Otis data underneath):
 
 ```
-Q1: D    Q2: A    Q3: D    Q4: A    Q5: C
-Q6: D    Q7: C    Q8: B    Q9: A    Q10: D
-Q11: C   Q12: B   Q13: D   Q14: C   Q15: B
-Q16: A   Q17: A   Q18: A   Q19: C   Q20: B
+D A D A C   D C B A D   C B D C B   A A A C B
 ```
 
-If the #1 result comes back as Aircraft Mechanic instead of Elevator Tech, the line changes to: "Aircraft mechanic. Seventy-nine thousand median, top ten percent past a hundred twenty. The FAA doesn't let AI sign off an airframe." Everything else stays the same.
+If it lands Aircraft Mechanic instead, swap the line to: "Aircraft mechanic, $79K median, and the FAA doesn't let AI sign off an airframe." Everything else holds.
+
+## Eligibility answers (fast, any are fine, these keep it dramatic)
+
+City of Chicago → 25 or older → "Diploma, and I passed algebra" → keep the pre-seeded trades → "I need income immediately" → skip flags (or pick one honestly).
 
 ## If something breaks
 
-- Refresh the page and hit "Take it again" — the whole app is one offline file, there is nothing to crash.
-- Worst case: skip to a pre-loaded results screen in a second tab (set this up before demos start).
+- No wifi: the green panel says "Chicago, snapshot" with cached Aug 7 data. Say "cached from this morning" and keep moving; nothing else needs internet.
+- Hard crash: refresh. The whole app is one file; state resets clean.
+- Keep a second tab pre-loaded at the results screen as a parachute.

@@ -1,58 +1,55 @@
-# Trade Match — Pitch
+# TradePath Chicago — Pitch (Claude Team 6)
 
-> The spoken pitch for the Claude Impact Lab demo. Read PRODUCT.md first for full context.
+> The spoken pitch for the Claude Impact Lab demo day. Built by Team 6. Lead builder: Spenser.
 
 ## One-liner
 
-"AI is coming for desk jobs. Trade Match uses it to move you into the jobs it can't touch, and pays a local tradesperson to show you the ropes before you bet tuition on it."
+"TradePath Chicago finds the trade that fits you, then finds who will pay you to learn it. Live city data included."
 
 ## The 90-second spoken pitch
 
 At the Claude Conversation in July, this city asked one question: what is AI doing to me, my kids, my community?
 
-Here's one honest answer: it's coming for desk jobs. The software engineer, the project manager, the new grad. They're all asking, "Will I have a job next year?"
+Team 6's answer: it's coming for desk jobs, so we used it to build the off-ramp into the jobs it can't touch.
 
-But here's what nobody tells them. An elevator technician's median pay is $106,000. A power lineman, $92,000. An electrician tops out over six figures. These jobs are growing, they can't be done by AI, and they're starving for people. The problem isn't the jobs. The problem is nobody maps YOU to the right one, and switching is a blind bet: quit, pay for school, hope you picked right.
+Chicagoland doesn't have a funding shortage for trades training. It has an orientation problem and a navigation problem. Most people who'd thrive in a trade never seriously consider one, and the ones who do end up paying for school they didn't need to pay for, because over fifty million dollars a year in apprenticeships, pre-apprenticeships, and vouchers is scattered across forty agencies that don't talk to each other.
 
-Trade Match fixes that in three moves.
+TradePath fixes both, in order.
 
-**One: assess.** Five minutes, twenty questions about how you actually work. Not what you know, how you work.
+**First, the fit test.** Twenty questions about how you actually work, scored against sixteen trades with real federal pay data. Not a horoscope: the engine is built so the honest answer wins, and it names the traits that drove your match.
 
-**Two: match.** Real government pay data, real entry paths, real warnings, ranked to fit. Not a horoscope. The engine is built so the honest answer wins, and it tells you WHY you matched.
+**Second, the program match.** Your result flows straight into a directory of real Chicagoland programs, filtered by the things that actually gate you: your county, your age, your education, your situation. It ranks what will take you, flags what pays you while you train, and shows what's open right now, because union windows close fast: Plumbers 130 opens in November, IBEW 134 registers Wednesday mornings, and if one fixable thing blocks you, it names the program that unblocks it.
 
-**Three: pair.** This is the part we're building next. We match you with a solo working electrician, plumber, or HVAC tech in your neighborhood. You pay about $2,000 to spend a month on the job with them before you commit to anything. They get a second income teaching what they already do. You get the truth about the craft for a tenth of what a wrong year of tuition costs.
+**Third, live city data.** When you match to a trade, the app pulls the City of Chicago's own building permits, live, and shows who's pulling permits for your trade right now and in which neighborhoods. Match to elevator tech and it shows you Otis pulled 46 permits in the last 90 days, mostly Near North Side and the Loop. Those names come off real permits. That's who you call, or walk up to.
 
-That's money in a local tradesperson's pocket. That's a switcher saved from a $20,000 mistake. That's a community answer to the AI question, built with the same AI that's causing it.
+**And it ends in a plan.** One printable page: your trade, your three programs, the money to apply for before you enroll anywhere, and a checklist for the next seven days.
 
-Take the test. It's five minutes. It might change your next ten years.
+We built this today, as a team, with Claude. It runs on a phone, offline, no signup. Take the test.
 
 ## Why this wins a community-minded room
 
-- **Two-sided local impact.** Every stage-3 match pays a neighborhood tradesperson AND saves a neighbor money. Make money, save money, save time, in one move.
-- **It flips the fear.** The event's question is about AI as a threat. This is AI as an off-ramp. That reframe is the emotional core.
-- **A working thing.** The assess-and-match engine runs live, today, offline, on a phone. Most teams demo slides. We demo a product.
-- **Honest by design.** The product itself says "don't trust a quiz, go shadow someone." That credibility is rare and the room will feel it.
+- **It's a complete loop, not a demo.** Quiz → eligibility → funded programs → live demand signal → printable plan. Most teams show a front end; this hands you Monday morning.
+- **The data is real and layered.** Federal BLS pay data + hand-verified Chicagoland program records with application windows + live City of Chicago permits. Three data sources, one of them updating live on stage.
+- **It routes people to free money.** The core insight: almost nobody in Chicagoland should pay full price for trades training. The app's whole job is stopping the $20,000 wrong guess.
+- **It flips the AI fear.** The event's question treats AI as a threat. This is AI as a counselor, a navigator, and a jobs radar for work AI cannot do.
 
 ## Objection handling
 
-**"Isn't this just a quiz?"**
-The quiz is the front door. The business is Stage 3: paid month-long pairings with working tradespeople. The quiz creates the demand and tells us exactly which trade to pair each person with.
+**"A quiz doesn't get you a job."**
+Agreed, which is why the quiz is one of four parts. The program match names the actual door (IBEW 134 registers in person, Wednesdays 9-11am in Alsip). The deadline board tracks the windows. The live permits panel names the companies working your trade this quarter. And the plan tells you what to do this week.
 
-**"Why would I trust a quiz with my career?"**
-You shouldn't, and it says so. All pay data is Bureau of Labor Statistics, May 2024. Every result ends with: shadow someone, call the union hall, search your state's apprenticeships. Stage 3 just makes that advice bookable.
+**"Is the program data real?"**
+Every program record was verified against primary sources in August 2026, and the app says "call before you count on it" where a provider's own site is stale. The union locals and application URLs were verified twice, second pass adversarial (see context/CHICAGO-SOURCES.md).
 
-**"Would a tradesperson really do this?"**
-Solo tradespeople already train apprentices for free under union rules. This pays them $2,000/month for something they already know how to do, with no long-term commitment. Second income, zero new skills required.
+**"Is the live data real?"**
+It's the City of Chicago's public permits API, fetched in front of you, no key, no server. Kill the wifi and the app falls back to a labeled cached snapshot. We can demo it either way.
 
-**"What about liability/insurance for job-site shadowing?"**
-Real question, and it's solvable: observation-first month, waivers, and the same ride-along model trade schools already use for site visits. It's an operations problem, not a concept problem.
+**"What's the business?"**
+Phase 1 is civic infrastructure: workforce boards and CPS counselors are the natural operators. The longer arc adds warm handoffs to providers (qualified referrals both sides want) and the paid try-a-trade pairing: about $2,000 for a month alongside a working tradesperson before you bet tuition, income for them, truth for you.
 
-**"$2,000 is a lot for some people."**
-It's priced against the alternative: a semester of trade school runs $5,000-$15,000, a year of college more. And Stage 3 can take community sponsorship: a workforce board or church sponsoring five pairings is a line item, not a moonshot.
+**"Why won't this go stale?"**
+The permits layer updates itself. Program records need a monthly verification pass, which is exactly what phase 1 of the roadmap on the app's own methodology page proposes, with a "last verified" date on every card.
 
 ## Where this goes next (the wrap-up beat)
 
-- Localize pay data by state and metro.
-- Partner list: union halls, apprenticeship programs, workforce boards in Chicago.
-- Pilot: five paired matches, one neighborhood, measure completion and hire-through.
-- Counselor mode: schools and re-entry programs run it in a session.
+Provider handoffs (CWIT, Revolution Workshop, Illinois Works intake forms inside the app), deadline alerts when Local 150's window opens, outcome data flowing back so the fit test learns from who's still in the trade at 18 months, then statewide: the structure ports because BLS data is national and every state has WIOA boards and JATCs.
