@@ -1,0 +1,58 @@
+/* TradePath brand tokens from the Lovable project's styles.css (Tailwind v4).
+   This is the load-bearing slice; the rest of that file is stock shadcn setup.
+   These map to the utilities the pages use: bg-amber, text-ink-dark, bg-paper,
+   font-display, font-mono, plus the tp-grain / tp-blueprint texture utilities. */
+
+@theme {
+  --color-ink-dark: #12151c;
+  --color-bg-site: #101215;
+  --color-panel: #181b20;
+  --color-panel-2: #1f2329;
+  --color-line: #2c3138;
+  --color-ink: #eef1f4;
+  --color-dim: #9aa3ad;
+  --color-amber: #f5a524;
+  --color-amber-bright: #ffc257;
+  --color-trade-green: #4ec98a;
+  --color-trade-red: #e8705a;
+  --color-paper: #f7f8fa;
+  --font-display: "Archivo", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+@utility tp-grain {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: radial-gradient(
+      circle at 1px 1px,
+      color-mix(in oklab, var(--color-ink) 12%, transparent) 1px,
+      transparent 0
+    );
+    background-size: 4px 4px;
+  }
+}
+
+@utility tp-blueprint {
+  background-image:
+    linear-gradient(color-mix(in oklab, #12151c 7%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, #12151c 7%, transparent) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+@layer base {
+  body {
+    font-family: var(--font-sans);
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    letter-spacing: -0.025em;
+  }
+}
