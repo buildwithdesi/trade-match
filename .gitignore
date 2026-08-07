@@ -5,3 +5,5 @@ node_modules/
 *.pem
 .DS_Store
 Thumbs.db
+
+.vercel

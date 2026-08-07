@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>TradePath Chicago</title>
+<title>TradePath Chicago — Find your trade, then find who will pay you to learn it</title>
 <style>
 :root{
   --ink:#12151c; --ink2:#1c2230; --slate:#5a6478; --line:#e3e6ec;
@@ -57,6 +57,7 @@ button{font:inherit;cursor:pointer}
 
 /* ---------- hero ---------- */
 .hero{background:linear-gradient(170deg,var(--ink) 0%,#1e2534 62%,#27303f 100%);color:#fff;padding:52px 0 60px;position:relative;overflow:hidden}
+.hero:after{content:"";position:absolute;right:-90px;top:-90px;width:340px;height:340px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.16),transparent 70%)}
 .hero .wrap{position:relative;z-index:2}
 .eyebrow{display:inline-flex;align-items:center;gap:7px;background:rgba(245,166,35,.14);border:1px solid rgba(245,166,35,.32);color:var(--amber);font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:5px 12px;border-radius:99px;margin-bottom:18px}
 h1.big{font-size:clamp(30px,5vw,46px);line-height:1.08;letter-spacing:-.03em;font-weight:800;max-width:17ch}
@@ -173,6 +174,7 @@ details.all[open] summary::after{transform:rotate(180deg)}
 
 /* handoff banner */
 .handoff{background:linear-gradient(160deg,var(--ink),#242c3b);color:#fff;border-radius:18px;padding:28px 30px;margin:26px 0 8px;position:relative;overflow:hidden}
+.handoff:after{content:"";position:absolute;right:-60px;bottom:-70px;width:230px;height:230px;border-radius:50%;background:radial-gradient(circle,rgba(245,166,35,.18),transparent 70%)}
 .handoff .in{position:relative;z-index:2}
 .handoff h3{font-size:22px;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
 .handoff p{color:#b6bfd0;font-size:15px;max-width:62ch;margin-bottom:18px}
@@ -393,18 +395,18 @@ footer b{color:var(--ink)}
     <div class="wrap">
       <div class="eyebrow">● Chicago · Cook · DuPage · Lake · Will · Kane · McHenry</div>
       <h1 class="big">Find the trade that fits you. Then find <em>who will pay you to learn it.</em></h1>
-      <p class="sub">A 5-minute fit test, then the Chicagoland programs that pay you to train.</p>
+      <p class="sub">Two problems, one app. Most people who would be good at a trade never pick one, because nobody ever asked them the right questions. The ones who do pick end up paying for school they did not need to pay for, because the free money in Chicagoland is scattered across forty agencies that do not talk to each other. This fixes both, in that order.</p>
       <div class="doors">
         <button class="door" data-go="test">
-          <div class="dn">Start here · 5 min</div>
+          <div class="dn">Start here · about 5 minutes</div>
           <h3>I don't know what trade I want</h3>
-          <p>Twenty questions. Sixteen trades. Real pay data.</p>
+          <p>Twenty questions about how you actually like to work. Scores you against sixteen trades using real federal pay and outlook data, then hands the answer straight to the Chicagoland program finder.</p>
           <div class="go">Take the fit test →</div>
         </button>
         <button class="door" data-go="eligibility">
-          <div class="dn">2 min</div>
+          <div class="dn">About 2 minutes</div>
           <h3>I already know my trade</h3>
-          <p>Six questions. Ranked programs that will take you.</p>
+          <p>Skip the test. Six questions about where you live, your age, your education and your situation, and we will rank every Chicagoland program that will actually take you, and name what pays for it.</p>
           <div class="go">Go straight to programs →</div>
         </button>
       </div>
@@ -412,22 +414,44 @@ footer b{color:var(--ink)}
     </div>
   </div>
 
-  <div class="wrap" style="padding-top:34px">
-    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(220px,1fr))">
+  <div class="wrap" style="padding-top:44px">
+    <h2 class="sec-h">Why the order matters</h2>
+    <p class="sec-p">A trade quiz on its own tells you something interesting and then abandons you. A program directory on its own is useless if you do not know the difference between a pre-apprenticeship and a JATC. Chained together, the test answers "what," the directory answers "how," and the plan answers "what do I do Monday morning."</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(268px,1fr))">
       <div class="card" style="cursor:default">
-        <div class="meta" style="margin-bottom:8px"><span class="tag t-paid">You get paid</span></div>
-        <h4>Apprenticeships</h4>
-        <p class="blurb">Hired first, trained second. Paycheck from week one.</p>
+        <div class="meta" style="margin-bottom:10px"><span class="tag t-trade">Step 1</span></div>
+        <h4>The fit test</h4>
+        <p class="blurb">Twenty questions scoring you across fifteen traits, from tolerance for heights and dirt to whether you want to own a business someday. Sixteen trades ranked, each with the federal median wage, the top-decile wage, and the ten-year outlook. It tells you the downsides too.</p>
       </div>
       <div class="card" style="cursor:default">
-        <div class="meta" style="margin-bottom:8px"><span class="tag t-paid">Free + stipend</span></div>
+        <div class="meta" style="margin-bottom:10px"><span class="tag t-paid">Step 2</span></div>
+        <h4>The program match</h4>
+        <p class="blurb">Your top trades pre-fill the program finder. Six more questions apply the hard filters (county, age, education, identity-based eligibility) and then rank what is left by how well it fits, whether it pays you, and whether it is open right now.</p>
+      </div>
+      <div class="card" style="cursor:default">
+        <div class="meta" style="margin-bottom:10px"><span class="tag t-free">Step 3</span></div>
+        <h4>The plan</h4>
+        <p class="blurb">One page you can print. Your trade, the specific Chicago door into it, your three best programs with the exact first step for each, the money to apply for before you enroll anywhere, and a checklist for the next seven days.</p>
+      </div>
+    </div>
+
+    <h2 class="sec-h" style="margin-top:44px">Three ways this actually gets paid for</h2>
+    <p class="sec-p">Almost nobody in Chicagoland should be paying full price for trades training. These are the three funding models, and most people qualify for more than one at the same time.</p>
+    <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(268px,1fr))">
+      <div class="card" style="cursor:default">
+        <div class="meta" style="margin-bottom:10px"><span class="tag t-paid">You get paid</span></div>
+        <h4>Registered apprenticeships</h4>
+        <p class="blurb">You are hired first and trained second. No tuition, a real paycheck from week one, and health insurance and a pension on top. Chicagoland has roughly 18 of these across the building trades. The catch is that application windows are narrow, sometimes one morning a week or one month a year.</p>
+      </div>
+      <div class="card" style="cursor:default">
+        <div class="meta" style="margin-bottom:10px"><span class="tag t-paid">Free + stipend</span></div>
         <h4>Pre-apprenticeships</h4>
-        <p class="blurb">Free training that gets union halls to say yes.</p>
+        <p class="blurb">Six to twenty-two weeks of free training that gets you the credentials union halls want to see, often with a stipend, childcare and transportation covered. This is the on-ramp if you do not have a diploma, have a record, or just do not know which trade you want yet.</p>
       </div>
       <div class="card" style="cursor:default">
-        <div class="meta" style="margin-bottom:8px"><span class="tag t-free">Tuition covered</span></div>
-        <h4>Vouchers &amp; grants</h4>
-        <p class="blurb">Up to $10,000. Apply before you enroll.</p>
+        <div class="meta" style="margin-bottom:10px"><span class="tag t-free">Tuition covered</span></div>
+        <h4>Vouchers and grants</h4>
+        <p class="blurb">WIOA vouchers worth $7,000 to $10,000, state grants, and City Colleges programs that cover tuition, books, tools and even your union application fees. The rule almost everyone breaks: apply for the money <em>before</em> you enroll, because most of it pays the school directly and will not reimburse you.</p>
       </div>
     </div>
   </div>
@@ -483,7 +507,7 @@ footer b{color:var(--ink)}
 <section class="view" id="v-browse">
   <div class="wrap pad">
     <h2 class="sec-h">Every program we track</h2>
-    <p class="sec-p">Verified against primary sources, August 2026. Call before you count on anything marked "verify."</p>
+    <p class="sec-p">All verified against primary sources in August 2026. Programs marked "verify" have details their own websites do not publish, so call before you count on them.</p>
     <div class="filters">
       <div class="fgrp"><label>Search</label><input id="fq" placeholder="Welding, electrical, veteran…"></div>
       <div class="fgrp"><label>County</label><select id="fc"></select></div>
@@ -499,7 +523,7 @@ footer b{color:var(--ink)}
 <section class="view" id="v-deadlines">
   <div class="wrap pad">
     <h2 class="sec-h">What's open right now</h2>
-    <p class="sec-p">Windows close fast. Sorted by urgency. Your trades are flagged.</p>
+    <p class="sec-p">Union application windows are the single biggest reason people miss out. Some open one morning a week, some open one month a year, and some are announced by email with almost no notice. This is the board, sorted by urgency. If you have taken the fit test, the ones tied to your trades are flagged.</p>
     <div class="dl-grid" id="dlGrid"></div>
   </div>
 </section>
@@ -2627,11 +2651,11 @@ function rail(stage){
   const paid = PROGRAMS.filter(p=>p.pay==='paid'||p.pay==='stipend').length;
   const open = PROGRAMS.filter(p=>p.open).length;
   $('homeStats').innerHTML = `
-    <div class="stat"><b>${TRADES.length}</b><span>trades scored</span></div>
-    <div class="stat"><b>${PROGRAMS.length}</b><span>programs, 7 counties</span></div>
-    <div class="stat"><b>${paid}</b><span>pay you to train</span></div>
-    <div class="stat"><b>${open}</b><span>open right now</span></div>
-    <div class="stat"><b>$10k</b><span>max WIOA voucher</span></div>`;
+    <div class="stat"><b>${TRADES.length}</b><span>trades scored against how you work</span></div>
+    <div class="stat"><b>${PROGRAMS.length}</b><span>programs tracked across 7 counties</span></div>
+    <div class="stat"><b>${paid}</b><span>actually pay you while you train</span></div>
+    <div class="stat"><b>${open}</b><span>accepting applications right now</span></div>
+    <div class="stat"><b>$10k</b><span>max WIOA voucher in DuPage County</span></div>`;
 })();
 
 /* ============================================================
@@ -2841,8 +2865,8 @@ function finishTest(){
     <div class="handoff">
       <div class="in">
         <div class="cnt">◆ ${eligible} Chicagoland programs touch your top three trades</div>
-        <h3>Now find who will take you</h3>
-        <p>Six questions. We rank what will take you and flag what pays you.</p>
+        <h3>Now the part every other trade quiz skips</h3>
+        <p>Knowing the trade is worth nothing on its own. Six more questions about where you live, your age, your education and your situation, and we will tell you which of those programs will actually take you, which ones pay you while you train, and which one to call this week.</p>
         <button class="btn btn-primary" onclick="startElig()">Find the programs that will take me →</button>
       </div>
     </div>`;
@@ -2854,7 +2878,7 @@ function finishTest(){
    PART 2 — ELIGIBILITY QUIZ
    ============================================================ */
 const EQUESTIONS = [
-  { key:'county', q:'Where do you live?', hint:'Funding is county-based.', multi:false, two:true,
+  { key:'county', q:'Where do you live?', hint:'This matters more than almost anything else. Funding is county-based and the caps differ a lot.', multi:false, two:true,
     opts:[
       {v:'chicago', l:'City of Chicago', d:'Most options by far'},
       {v:'cook', l:'Suburban Cook County', d:'Oak Park, Cicero, Evanston, south suburbs'},
@@ -2864,20 +2888,20 @@ const EQUESTIONS = [
       {v:'kane', l:'Kane County', d:'Aurora, Elgin, Batavia'},
       {v:'mchenry', l:'McHenry County', d:'Woodstock, Crystal Lake'}
     ]},
-  { key:'age', q:'How old are you?', hint:'', multi:false, two:true,
+  { key:'age', q:'How old are you?', hint:'A few strong programs are age-gated in both directions.', multi:false, two:true,
     opts:[
       {v:'u18', l:'Under 18', d:'Still in high school'},
       {v:'18_24', l:'18 to 24', d:'Unlocks youth-specific funding'},
       {v:'25_plus', l:'25 or older', d:''}
     ]},
-  { key:'edu', q:'What is your education situation?', hint:'No diploma rules out less than you think.', multi:false,
+  { key:'edu', q:'What is your education situation?', hint:'Be honest here. Not having a diploma rules out fewer things than people assume, and we will show you the way around it.', multi:false,
     opts:[
       {v:'none', l:'No high school diploma or GED yet', d:'There are still real options, including ones that pay you while you finish it'},
       {v:'hsd_ged', l:'I have a high school diploma or GED', d:'This opens up union apprenticeships'},
       {v:'hsd_algebra', l:'Diploma, and I passed a year of high school algebra', d:'Required for the biggest electrical apprenticeship in the city'},
       {v:'college', l:'Some college or a degree', d:''}
     ]},
-  { key:'trades', q:'What kind of work sounds good?', hint:'Pick any. Not sure is fine.', multi:true, two:true,
+  { key:'trades', q:'What kind of work sounds good?', hint:'Pick as many as you want. Not sure is a completely valid answer and will not narrow your results.', multi:true, two:true,
     opts:[
       {v:'electrical', l:'Electrical', d:'Wiring, line work, solar'},
       {v:'plumbing', l:'Plumbing & pipefitting', d:'Among the highest paid'},
@@ -2891,13 +2915,13 @@ const EQUESTIONS = [
       {v:'elevator', l:'Elevator', d:'Highest journey wage in the city'},
       {v:'general', l:'Not sure yet', d:'Start broad, decide later'}
     ]},
-  { key:'goal', q:'What matters most to you right now?', hint:'', multi:false,
+  { key:'goal', q:'What matters most to you right now?', hint:'This changes the ranking more than anything else you have told us.', multi:false,
     opts:[
       {v:'earn', l:'I need income immediately', d:'We will rank paid apprenticeships and stipend programs first'},
       {v:'credential', l:'I want a credential fast', d:'Short certificate programs with tuition covered'},
       {v:'explore', l:'I want to try it before I commit', d:'Free pre-apprenticeships that expose you to several trades'}
     ]},
-  { key:'flags', q:'Does anything here apply to you?', hint:'Each unlocks funding. Skip anything private.', multi:true,
+  { key:'flags', q:'Does anything here apply to you?', hint:'Every one of these unlocks funding most people never hear about. Skip anything you would rather not say.', multi:true,
     opts:[
       {v:'veteran', l:'I am a veteran', d:'Illinois Veteran Grant is an entitlement, not a competition'},
       {v:'guard', l:'I am in the Illinois National Guard', d:''},
@@ -2932,11 +2956,11 @@ function renderE(){
   $('ebar').style.width = (ei/EQUESTIONS.length*100)+'%';
   const cur = answers[Q.key] || (Q.multi?[]:null);
   const seedNote = (Q.key==='trades' && testDone)
-    ? `<div class="q-hint" style="color:var(--amber-d);font-weight:600">Pre-filled from your fit test.</div>` : '';
+    ? `<div class="q-hint" style="color:var(--amber-d);font-weight:600">Pre-filled from your fit test (${tradeRanking.slice(0,3).map(r=>r.name).join(', ')}). Change anything you like.</div>` : '';
   $('ebody').innerHTML = `
     <div class="step-n">Question ${ei+1} of ${EQUESTIONS.length}</div>
     <div class="q">${Q.q}</div>
-    ${Q.hint?`<div class="q-hint">${Q.hint}</div>`:'<div style="height:14px"></div>'}
+    <div class="q-hint">${Q.hint}</div>
     ${seedNote}
     <div class="opts ${Q.two?'two':''}">
       ${Q.opts.map(o=>{
@@ -3338,7 +3362,7 @@ function renderMyPlan(){
 
       ${cash.length?`
       <h3>Money to apply for before you enroll anywhere</h3>
-      <p>Apply before you enroll. Most pay the school directly and will not reimburse you. They stack.</p>
+      <p>These pay the school directly and mostly will not reimburse you after the fact, which is the single most expensive mistake people make. They also stack.</p>
       ${cash.map((r,i)=>`
         <div class="pstep">
           <div class="pn">$</div>
@@ -3487,7 +3511,7 @@ function chiPanel(cfg,count,top,areas,liveMode){
     <div class="lbhead">${count.toLocaleString()} ${cfg.noun} pulled in the last 90 days.</div>
     ${rows}
     ${chips?`<div class="lbareas">${chips}</div>`:''}
-    <div class="lbsrc">Source: City of Chicago building permits${liveMode?', live':', cached Aug 7'}.</div>
+    <div class="lbsrc">${top.length?'<b>These names come off real building permits.</b> They are who you call, or walk up to. ':''}Source: City of Chicago building permits${liveMode?', fetched just now':', cached Aug 7'}.</div>
   </div>`;
 }
 
