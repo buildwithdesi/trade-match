@@ -150,6 +150,22 @@
   .stats .n{font-size:21px;font-weight:800;letter-spacing:-.02em;color:var(--amber)}
   .stats .d{font-size:11.5px;color:var(--dim);margin-top:3px;line-height:1.35}
 
+  /* ---------- chicago live panel ---------- */
+  .live{margin-top:14px;background:rgba(78,201,138,.06);border:1px solid rgba(78,201,138,.28);border-radius:12px;padding:16px 17px}
+  .live .l{display:flex;align-items:center;gap:7px;font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--green);font-weight:700;margin-bottom:8px}
+  .live .dot{width:7px;height:7px;border-radius:99px;background:var(--green);animation:pulse 1.6s ease infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+  .live .head{font-size:15px;font-weight:650;margin-bottom:11px}
+  .live .head b{color:var(--green)}
+  .co{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid rgba(78,201,138,.14);font-size:14px}
+  .co:first-of-type{border-top:0}
+  .co .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .co .bb{width:74px;height:5px;background:rgba(78,201,138,.12);border-radius:99px;overflow:hidden;flex:0 0 74px}
+  .co .bb span{display:block;height:100%;background:var(--green)}
+  .co .n{width:72px;text-align:right;color:var(--dim);font-size:12.5px;flex:0 0 72px}
+  .live .src{margin-top:10px;font-size:12px;color:var(--dim);line-height:1.5}
+  .live .src b{color:var(--ink)}
+
   /* ---------- stage-3 pairing panel ---------- */
   .next{margin-top:14px;background:rgba(245,165,36,.07);border:1px solid rgba(245,165,36,.3);border-radius:12px;padding:16px 17px}
   .next .l{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--amber);font-weight:700;margin-bottom:6px}
@@ -190,6 +206,11 @@
     .allrows{padding:0}
     .next{background:#fff8ec;border-color:#e8cf9e;color:#111}
     .next .l{color:#a8720c}
+    .live{background:#f3fbf6;border-color:#bfe6d0;color:#111}
+    .live .l{color:#1d7a4c}
+    .live .dot{animation:none}
+    .live .src{color:#555}
+    .co .bb{background:#e4efe8}
     .next .btn,.next .soon{display:none}
     .card,.rank,details,.fitbar span,.allrow .bb span{animation:none !important}
   }
@@ -793,6 +814,7 @@ function finish(){
       </div>
       <div class="warn"><b>Before you commit:</b> ${t.watch}</div>
       ${i===0?`
+      <div id="chi"></div>
       <div class="next">
         <div class="l">Next step</div>
         <p>Spend a month on the job with a working ${t.name.split("/")[0].split("(")[0].trim().toLowerCase()} before you commit to school. They earn a second income. You get the truth about the craft for a fraction of tuition.</p>
@@ -813,6 +835,83 @@ function finish(){
   }).join("");
 
   window.scrollTo({top:0,behavior:"smooth"});
+  loadChicago(ranked[0].tr);
+}
+
+/* ============================================================
+   CHICAGO, LIVE
+   City of Chicago Building Permits (dataset ydr8-5enu, Socrata).
+   Open CORS, no key. Every permit names its contractors, so the
+   panel shows who is actually pulling permits for your trade
+   right now. Falls back to a baked snapshot when offline.
+   ============================================================ */
+const CHI_API = "https://data.cityofchicago.org/resource/ydr8-5enu.json";
+
+// Trade -> permit contact types. Sign shops also file as
+// CONTRACTOR-ELECTRICAL, so electrician results drop sign companies.
+const CHI_TRADE = {
+  electrician:{types:["CONTRACTOR-ELECTRICAL"],noun:"electrical permits",drop:/SIGN|GRAPHIC|NEON/i},
+  elevator:{types:["CONTRACTOR-ELEVATOR"],noun:"elevator permits"},
+  plumber:{types:["CONTRACTOR-PLUMBER","CONTRACTOR-PLUMBER/PLUMBING","CONTRACTOR-PLUMBING"],noun:"plumbing permits"},
+  hvac:{types:["CONTRACTOR-REFRIGERATION","CONTRACTOR-VENTILATION","CONTRACTOR-HVAC"],noun:"HVAC and refrigeration permits"},
+  mason:{types:["CONTRACTOR-MASON","CONTRACTOR-MASONRY"],noun:"masonry permits"},
+  carpenter:{types:["CONTRACTOR-GENERAL CONTRACTOR"],noun:"job sites (general contractor permits)"},
+  ironworker:{types:["CONTRACTOR-GENERAL CONTRACTOR"],noun:"job sites (general contractor permits)"},
+  operator:{types:["CONTRACTOR-GENERAL CONTRACTOR"],noun:"job sites (general contractor permits)"}
+};
+
+// Baked 2026-08-07 so the panel still demos with no wifi.
+const CHI_SNAPSHOT = {
+  electrician:{count:311,top:[["J & Y Electr. Contractor & Ser",27],["City Service Electric Inc.",21],["Rom-Electric",20],["Pro-Line Electrical",16],["Saayu Electric",12]]},
+  elevator:{count:321,top:[["Otis Elevator - Chicago",46],["Extended Home Living Svcs",29],["Otis Elevator - Lombard",25],["Kone Elevator Company",24],["Schindler Elevator Corp",23]]},
+  carpenter:{count:466,top:[]},
+  ironworker:{count:466,top:[]},
+  operator:{count:466,top:[]}
+};
+
+const tCase = s => s.toLowerCase().replace(/(^|[\s\-&\.\/])([a-z])/g,(m,a,b)=>a+b.toUpperCase());
+
+function chiPanel(cfg, count, top, liveMode){
+  const rows = top.slice(0,5).map(([nm,n],i)=>{
+    const w = Math.round(n/(top[0][1]||1)*100);
+    return `<div class="co"><span class="nm">${tCase(String(nm))}</span><span class="bb"><span style="width:${w}%"></span></span><span class="n">${n} permits</span></div>`;
+  }).join("");
+  return `
+    <div class="l"><span class="dot"></span>Chicago, ${liveMode?"live":"snapshot"}</div>
+    <div class="head"><b>${count.toLocaleString()}</b> ${cfg.noun} pulled in the last 90 days.</div>
+    ${rows || ""}
+    <div class="src">${top.length? "<b>These names come off real building permits.</b> They are who you call, or walk up to. " : ""}Source: City of Chicago building permits${liveMode?", fetched just now":", cached "+"Aug 7"}.</div>`;
+}
+
+async function loadChicago(tr){
+  const box = document.getElementById("chi");
+  const cfg = CHI_TRADE[tr.id];
+  if (!box || !cfg) return;
+  const snap = CHI_SNAPSHOT[tr.id];
+  if (snap) box.innerHTML = `<div class="live">${chiPanel(cfg, snap.count, snap.top, false)}</div>`;
+  try{
+    const since = new Date(Date.now()-90*864e5).toISOString().slice(0,10);
+    const slots = [1,2,3,4];
+    const where = "issue_date>'"+since+"' AND (" +
+      slots.map(s=>cfg.types.map(t=>`contact_${s}_type='${t}'`).join(" OR ")).join(" OR ") + ")";
+    const sel = "issue_date," + slots.map(s=>`contact_${s}_type,contact_${s}_name`).join(",");
+    const url = CHI_API+"?$select="+encodeURIComponent(sel)+"&$where="+encodeURIComponent(where)+"&$limit=900&$order=issue_date%20DESC";
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const rows = await res.json();
+    const agg = new Map();
+    rows.forEach(r=>{
+      slots.forEach(s=>{
+        const ty=r["contact_"+s+"_type"], nm=r["contact_"+s+"_name"];
+        if (!ty || !nm || !cfg.types.includes(ty)) return;
+        if (cfg.drop && cfg.drop.test(nm)) return;
+        agg.set(nm,(agg.get(nm)||0)+1);
+      });
+    });
+    const top = [...agg.entries()].sort((a,b)=>b[1]-a[1]);
+    if (!rows.length) return;
+    box.innerHTML = `<div class="live">${chiPanel(cfg, rows.length, top, true)}</div>`;
+  }catch(e){ /* offline: snapshot already rendered */ }
 }
 
 $("start").onclick = () => {
