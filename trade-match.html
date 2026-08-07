@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Trade Match: Which Skilled Trade Fits You?</title>
+<link rel="icon" href='data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="22" fill="%23f5a524"/><text x="50" y="70" font-size="56" text-anchor="middle">⚒</text></svg>'>
+<style>
+  :root{
+    --bg:#101215;
+    --panel:#181b20;
+    --panel2:#1f2329;
+    --line:#2c3138;
+    --ink:#eef1f4;
+    --dim:#9aa3ad;
+    --amber:#f5a524;
+    --amber2:#ffc257;
+    --green:#4ec98a;
+    --red:#e8705a;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    background:
+      radial-gradient(900px 500px at 15% -10%, #1c222b 0%, transparent 60%),
+      var(--bg);
+    color:var(--ink);
+    font:16px/1.55 ui-sans-serif,system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    min-height:100vh;
+  }
+  .wrap{max-width:760px;margin:0 auto;padding:24px 18px 80px}
+
+  /* ---------- header ---------- */
+  header.top{display:flex;align-items:center;gap:12px;margin-bottom:22px}
+  .mark{
+    width:38px;height:38px;flex:0 0 38px;border-radius:9px;
+    background:linear-gradient(160deg,var(--amber),#d4830a);
+    display:grid;place-items:center;color:#1a1205;font-weight:800;font-size:19px;
+    box-shadow:0 6px 18px rgba(245,165,36,.22);
+  }
+  .brand{font-weight:750;letter-spacing:-.02em;font-size:18px}
+  .brand small{display:block;font-weight:500;font-size:12px;color:var(--dim);letter-spacing:0}
+
+  /* ---------- cards ---------- */
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:26px 24px;box-shadow:0 18px 40px rgba(0,0,0,.28);
+  }
+  h1{font-size:30px;line-height:1.15;letter-spacing:-.03em;margin:0 0 12px}
+  h2{font-size:21px;letter-spacing:-.02em;margin:0 0 10px}
+  p.lede{color:var(--dim);margin:0 0 18px}
+  .meta{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 22px}
+  .chip{
+    background:var(--panel2);border:1px solid var(--line);border-radius:999px;
+    padding:6px 13px;font-size:13px;color:var(--dim)
+  }
+
+  button{font:inherit;cursor:pointer}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    background:linear-gradient(160deg,var(--amber2),var(--amber));
+    color:#1a1205;border:0;border-radius:11px;padding:14px 24px;
+    font-weight:700;font-size:16px;letter-spacing:-.01em;
+    box-shadow:0 8px 20px rgba(245,165,36,.22);transition:transform .12s ease, filter .12s;
+  }
+  .btn:hover{filter:brightness(1.06)}
+  .btn:active{transform:translateY(1px)}
+  .btn.ghost{background:transparent;color:var(--dim);border:1px solid var(--line);box-shadow:none;font-weight:600}
+  .btn.ghost:hover{color:var(--ink);border-color:#3c434c}
+  .btn[disabled]{opacity:.35;cursor:not-allowed}
+
+  /* ---------- progress ---------- */
+  .prog{margin-bottom:20px}
+  .prog .bar{height:6px;background:var(--panel2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .prog .fill{height:100%;width:0;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .3s cubic-bezier(.4,0,.2,1)}
+  .prog .lbl{display:flex;justify-content:space-between;font-size:12.5px;color:var(--dim);margin-bottom:7px;letter-spacing:.02em}
+
+  /* ---------- question ---------- */
+  .qnum{font-size:12.5px;color:var(--amber);font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:9px}
+  .qtext{font-size:22px;line-height:1.3;letter-spacing:-.02em;font-weight:700;margin:0 0 18px}
+  .opts{display:grid;gap:10px}
+  .opt{
+    display:flex;align-items:flex-start;gap:11px;width:100%;text-align:left;background:var(--panel2);
+    border:1px solid var(--line);border-radius:12px;padding:15px 17px;
+    color:var(--ink);font-size:15.5px;line-height:1.45;transition:all .13s ease;
+  }
+  .opt:hover{border-color:#4a525c;background:#242931;transform:translateX(2px)}
+  .opt.sel{border-color:var(--amber);background:rgba(245,165,36,.10);box-shadow:inset 0 0 0 1px rgba(245,165,36,.35)}
+  .opt .k{
+    display:grid;place-items:center;width:22px;height:22px;flex:0 0 22px;border-radius:6px;
+    background:#2b3138;color:var(--dim);font-size:12px;font-weight:700;margin-top:1px;
+  }
+  .opt .txt{flex:1}
+  .opt.sel .k{background:var(--amber);color:#1a1205}
+  .nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px;gap:10px}
+
+  /* ---------- results ---------- */
+  .rank{
+    background:var(--panel);border:1px solid var(--line);border-radius:16px;
+    padding:22px;margin-bottom:14px;position:relative;overflow:hidden;
+  }
+  .rank.one{border-color:rgba(245,165,36,.5);box-shadow:0 0 0 1px rgba(245,165,36,.16),0 18px 40px rgba(0,0,0,.3)}
+  .rank .badge{
+    position:absolute;top:0;right:0;background:var(--panel2);border-left:1px solid var(--line);
+    border-bottom:1px solid var(--line);border-radius:0 15px 0 12px;padding:7px 14px;
+    font-size:12px;font-weight:700;color:var(--dim);letter-spacing:.06em
+  }
+  .rank.one .badge{background:linear-gradient(160deg,var(--amber2),var(--amber));color:#1a1205;border-color:transparent}
+  .rank h3{margin:0 0 3px;font-size:23px;letter-spacing:-.025em}
+  .rank .tag{color:var(--dim);font-size:14px;margin:0 0 15px}
+  .fitline{display:flex;align-items:center;gap:11px;margin:0 0 16px}
+  .fitbar{flex:1;height:7px;background:var(--panel2);border-radius:99px;overflow:hidden;border:1px solid var(--line)}
+  .fitbar span{display:block;height:100%;background:linear-gradient(90deg,var(--amber),var(--amber2))}
+  .fitpct{font-size:13px;font-weight:700;color:var(--amber);min-width:74px;text-align:right}
+  .why{background:rgba(78,201,138,.07);border:1px solid rgba(78,201,138,.22);border-radius:10px;padding:12px 14px;font-size:14.5px;margin-bottom:15px}
+  .why b{color:var(--green);font-weight:700}
+  .facts{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line);border:1px solid var(--line);border-radius:11px;overflow:hidden;margin-bottom:14px}
+  .fact{background:var(--panel2);padding:12px 14px}
+  .fact .l{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);margin-bottom:3px}
+  .fact .v{font-size:15px;font-weight:650;letter-spacing:-.01em}
+  .fact .v small{display:block;font-weight:400;font-size:12.5px;color:var(--dim);letter-spacing:0;margin-top:2px}
+  .rowlist{display:grid;gap:11px;font-size:14.5px}
+  .rowlist > div{display:grid;grid-template-columns:104px minmax(0,1fr);gap:12px;align-items:start}
+  .rowlist .l{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.07em;padding-top:3px}
+  .warn{margin-top:13px;font-size:14px;color:#f0b8ab;background:rgba(232,112,90,.08);border:1px solid rgba(232,112,90,.22);border-radius:10px;padding:11px 13px}
+  .warn b{color:var(--red)}
+
+  details{border:1px solid var(--line);border-radius:13px;background:var(--panel);margin-top:8px}
+  summary{padding:16px 20px;cursor:pointer;font-weight:650;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"▾";color:var(--dim);transition:transform .2s}
+  details[open] summary::after{transform:rotate(180deg)}
+  .allrows{padding:0 20px 18px}
+  .allrow{display:flex;align-items:center;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:14.5px}
+  .allrow .n{color:var(--dim);font-size:12.5px;width:22px;flex:0 0 22px}
+  .allrow .nm{flex:1}
+  .allrow .bb{width:88px;height:5px;background:var(--panel2);border-radius:99px;overflow:hidden;flex:0 0 88px}
+  .allrow .bb span{display:block;height:100%;background:var(--dim)}
+  .allrow .pp{width:42px;text-align:right;color:var(--dim);font-size:13px;flex:0 0 42px}
+
+  .note{color:var(--dim);font-size:13px;line-height:1.6;margin-top:26px;border-top:1px solid var(--line);padding-top:16px}
+  .note a{color:var(--amber);text-decoration:none}
+  .note a:hover{text-decoration:underline}
+
+  .hidden{display:none}
+
+  /* ---------- intro stats ---------- */
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:20px 0 4px}
+  .stats .s{background:var(--panel2);padding:14px 12px;text-align:center}
+  .stats .n{font-size:21px;font-weight:800;letter-spacing:-.02em;color:var(--amber)}
+  .stats .d{font-size:11.5px;color:var(--dim);margin-top:3px;line-height:1.35}
+
+  /* ---------- stage-3 pairing panel ---------- */
+  .next{margin-top:14px;background:rgba(245,165,36,.07);border:1px solid rgba(245,165,36,.3);border-radius:12px;padding:16px 17px}
+  .next .l{font-size:11px;text-transform:uppercase;letter-spacing:.09em;color:var(--amber);font-weight:700;margin-bottom:6px}
+  .next p{margin:0 0 13px;font-size:14.5px;line-height:1.5}
+  .next .soon{display:inline-block;margin-left:10px;font-size:12px;color:var(--dim)}
+  .btn.small{padding:11px 18px;font-size:14.5px}
+
+  /* ---------- motion ---------- */
+  @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes fillbar{from{width:0}}
+  @keyframes shimmer{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+  .card,details{animation:rise .45s cubic-bezier(.2,.7,.3,1) both}
+  #top3 .rank{animation:rise .5s cubic-bezier(.2,.7,.3,1) both}
+  #top3 .rank:nth-child(2){animation-delay:.14s}
+  #top3 .rank:nth-child(3){animation-delay:.28s}
+  .fitbar span,.allrow .bb span{animation:fillbar .9s cubic-bezier(.2,.7,.3,1) both;animation-delay:.35s}
+  .prog .fill{position:relative;overflow:hidden}
+  .prog .fill::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.35) 50%,transparent 70%);animation:shimmer 2.4s linear infinite}
+  @media(prefers-reduced-motion:reduce){*,*::after{animation:none !important;transition:none !important}}
+
+  /* ---------- print ---------- */
+  @media print{
+    body{background:#fff;color:#111}
+    .card,.rank,details{background:#fff;border-color:#ccc;box-shadow:none;break-inside:avoid}
+    .rank.one{box-shadow:none}
+    .rank .badge{background:#eee;color:#111;border-color:#ccc}
+    .fact{background:#fafafa}
+    .facts{background:#ddd;border-color:#ddd}
+    .why{background:#f3fbf6;border-color:#bfe6d0;color:#111}
+    .warn{background:#fdf3f1;border-color:#ecc4bb;color:#111}
+    .why b{color:#1d7a4c}.warn b{color:#b34a33}
+    .tag,.fact .l,.rowlist .l,.fact .v small,.note,p.lede{color:#555}
+    .fitpct{color:#a8720c}
+    .fitbar{border-color:#ddd;background:#eee}
+    .mark{box-shadow:none}
+    #intro,#quiz,.nav,#again,#print{display:none !important}
+    details{border:0}summary{display:none}
+    .allrows{padding:0}
+    .next{background:#fff8ec;border-color:#e8cf9e;color:#111}
+    .next .l{color:#a8720c}
+    .next .btn,.next .soon{display:none}
+    .card,.rank,details,.fitbar span,.allrow .bb span{animation:none !important}
+  }
+
+  @media(max-width:560px){
+    .allrow{font-size:13.5px;gap:8px}
+    .allrow .bb{width:46px;flex:0 0 46px}
+    .allrows{padding:0 14px 14px}
+    h1{font-size:25px}
+    .qtext{font-size:19px}
+    .card{padding:20px 17px}
+    .facts{grid-template-columns:1fr}
+    .rowlist div{grid-template-columns:1fr;gap:1px}
+    .nav .btn{padding:13px 18px;font-size:15px}
+    .stats .n{font-size:17px}
+    .stats .d{font-size:10.5px}
+    .next .soon{display:block;margin:8px 0 0}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="mark">⚒</div>
+    <div class="brand">Trade Match<small>Find the skilled trade that fits how you actually work</small></div>
+  </header>
+
+  <!-- ============ INTRO ============ -->
+  <section id="intro" class="card">
+    <div class="qnum">The AI-proof career test</div>
+    <h1>Which trade is actually built for you?</h1>
+    <p class="lede">Finishing school, switching careers, or watching AI circle your industry. Twenty questions about how you like to work, what you can put up with, and what you want your life to look like. No right answers. Answer honestly, not how you think you should.</p>
+    <div class="stats">
+      <div class="s"><div class="n">$106K</div><div class="d">highest median pay on the list</div></div>
+      <div class="s"><div class="n">16</div><div class="d">trades scored against how you work</div></div>
+      <div class="s"><div class="n">Day 1</div><div class="d">most apprenticeships pay from the start</div></div>
+    </div>
+    <div class="meta">
+      <span class="chip">20 questions</span>
+      <span class="chip">≈5 minutes</span>
+      <span class="chip">Real 2024 BLS pay data</span>
+      <span class="chip">Works offline</span>
+    </div>
+    <button class="btn" id="start">Start the test →</button>
+    <div class="note">
+      Built for anyone deciding what to do next: the high schooler, the new grad, the career switcher whose industry is getting disrupted. Pay figures are U.S. national medians from the Bureau of Labor Statistics (May 2024) and vary a lot by state, union status, and overtime. Built with Claude at the Claude Impact Lab, Chicago.
+    </div>
+  </section>
+
+  <!-- ============ QUIZ ============ -->
+  <section id="quiz" class="hidden">
+    <div class="prog">
+      <div class="lbl"><span id="plabel">Question 1 of 20</span><span id="ppct">0%</span></div>
+      <div class="bar"><div class="fill" id="pfill"></div></div>
+    </div>
+    <div class="card">
+      <div class="qnum" id="qnum">Question 1</div>
+      <p class="qtext" id="qtext"></p>
+      <div class="opts" id="opts"></div>
+      <div class="nav">
+        <button class="btn ghost" id="back">← Back</button>
+        <button class="btn" id="next" disabled>Next →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section id="results" class="hidden">
+    <div class="card" style="margin-bottom:16px">
+      <h2 id="verdict">Your top matches</h2>
+      <p class="lede" id="profile"></p>
+    </div>
+    <div id="top3"></div>
+    <details>
+      <summary>See how all 16 trades scored</summary>
+      <div class="allrows" id="allrows"></div>
+    </details>
+    <div style="display:flex;gap:10px;margin-top:18px;flex-wrap:wrap">
+      <button class="btn ghost" id="again">Take it again</button>
+      <button class="btn ghost" id="print">Print / save as PDF</button>
+    </div>
+    <div class="note">
+      <b>What to do with this.</b> A quiz can't tell you what your life will feel like at 6am in February. Before you commit to anything: ask to shadow someone for a day, call the local union hall or an apprenticeship program and ask what their intake looks like, and search <em>"[your state] apprenticeship" + the trade</em>. Most of these pay you from day one. Pay figures: U.S. Bureau of Labor Statistics, Occupational Outlook Handbook, May 2024 wage data and 2024-34 projections.
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   TRAITS
+   outdoor  - wants to be outside vs indoors
+   heights  - comfort working high up
+   physical - wants hard physical labor
+   precision- tolerance/detail obsession
+   diagnose - enjoys troubleshooting puzzles
+   machines - drawn to engines/equipment/machinery
+   people   - customer & client contact
+   travel   - variety of job sites / road work
+   business - wants to own a business someday
+   tech     - electronics, systems, controls, math
+   grit     - tolerance for dirt, grime, tight nasty spaces
+   routine  - wants a predictable repeatable day
+   risk     - tolerance for genuine danger
+   craft    - wants a visible finished thing they made
+   team     - big crew vs solo
+   ============================================================ */
+
+const TRAITS = ["outdoor","heights","physical","precision","diagnose","machines","people","travel","business","tech","grit","routine","risk","craft","team"];
+
+const QUESTIONS = [
+{q:"It's 6:00 a.m. on your first real day. Which one gets you out of bed?",
+ o:[
+  {t:"A loaded work truck and three different addresses before lunch", w:{travel:3,people:2,diagnose:1}},
+  {t:"The same shop, the same bench, the same machine, dialed in exactly how I like it", w:{routine:3,precision:2,outdoor:-2,team:-1}},
+  {t:"A job site with a crane running and something huge going up", w:{outdoor:3,team:3,physical:2}},
+  {t:"A plant floor where something is about to break and I'm the one who finds it", w:{diagnose:3,machines:3,routine:-2}}
+ ]},
+
+{q:"You're 80 feet up on a steel beam. The view is incredible. Your honest reaction?",
+ o:[
+  {t:"Best office in the world. Sign me up.", w:{heights:4,risk:2,outdoor:1}},
+  {t:"Nervous at first, but I'd get used to it, especially for the money", w:{heights:2,risk:1}},
+  {t:"I could do it if I had to, but I wouldn't pick it", w:{heights:-1}},
+  {t:"Not a chance. I need the ground.", w:{heights:-4,risk:-1}}
+ ]},
+
+{q:"It's 19°F, the wind is cutting, and you're outside for the whole shift.",
+ o:[
+  {t:"Layer up and go. I'd rather freeze than sit under fluorescent lights.", w:{outdoor:4,grit:2,physical:1}},
+  {t:"Not fun, but weather is part of the deal", w:{outdoor:2,grit:1}},
+  {t:"I'd take mostly-indoor work with some outside days", w:{outdoor:-2}},
+  {t:"Give me a roof and a thermostat", w:{outdoor:-4,grit:-1}}
+ ]},
+
+{q:"Which problem would you most enjoy chewing on for two hours?",
+ o:[
+  {t:"A circuit that won't energize, and tracing it back to one bad connection", w:{tech:3,diagnose:3,precision:1}},
+  {t:"An engine running rough, and narrowing it down to one failing sensor", w:{machines:3,diagnose:3}},
+  {t:"A part that has to be within a thousandth of an inch, and making it", w:{precision:4,routine:1,machines:1}},
+  {t:"A rough opening that's out of square, and making the finished work look perfect anyway", w:{craft:4,precision:2}}
+ ]},
+
+{q:"How do you feel about ending the day filthy?",
+ o:[
+  {t:"Grease under the nails is proof I did something", w:{grit:4,physical:1}},
+  {t:"Don't care, that's what a shower is for", w:{grit:2}},
+  {t:"I'd rather stay reasonably clean", w:{grit:-2,precision:1}},
+  {t:"Crawling through a crawlspace full of who-knows-what is a hard no", w:{grit:-4,precision:1}}
+ ]},
+
+{q:"You're in someone's house and they're standing there watching you work and asking questions.",
+ o:[
+  {t:"Great. I like people, and that's how you get repeat customers", w:{people:4,business:2}},
+  {t:"Fine. I can explain what I'm doing without it bothering me.", w:{people:2}},
+  {t:"I'd rather answer to a foreman than a homeowner", w:{people:-2,team:1}},
+  {t:"Let me put my headphones in and just work", w:{people:-4,team:-1}}
+ ]},
+
+{q:"Ten years from now, the version of this that would feel like winning:",
+ o:[
+  {t:"My own name on the side of three trucks", w:{business:4,people:2}},
+  {t:"Running the crew: foreman, then general foreman", w:{team:3,business:1,people:1}},
+  {t:"Being the person everyone calls when nobody else can figure it out", w:{diagnose:3,precision:2,tech:1}},
+  {t:"Solid union job, pension, home for dinner, no drama", w:{routine:3,business:-3,team:1}}
+ ]},
+
+{q:"Which high school class did you actually look forward to?",
+ o:[
+  {t:"Welding or metal shop", w:{precision:2,machines:2,craft:2,grit:1}},
+  {t:"Electronics, computers, or anything with wiring", w:{tech:4,diagnose:1}},
+  {t:"Woodshop or construction, building something real", w:{craft:4,physical:1}},
+  {t:"Auto shop, tearing into an engine", w:{machines:4,diagnose:2,grit:1}}
+ ]},
+
+{q:"Math, honestly.",
+ o:[
+  {t:"I like it. Formulas, calculations, figuring loads. That's satisfying.", w:{tech:3,precision:2}},
+  {t:"I'm good with measurements, angles, and layout", w:{craft:2,precision:2}},
+  {t:"Basic math is fine, I just don't want a textbook", w:{}},
+  {t:"I'd like to do as little of it as possible", w:{tech:-3,precision:-2,physical:1}}
+ ]},
+
+{q:"How much do you want the work to physically wear on you?",
+ o:[
+  {t:"I want to be tired and strong at the end of the day", w:{physical:4,grit:1}},
+  {t:"Some real lifting and moving is good", w:{physical:2}},
+  {t:"Moderate. On my feet, but not breaking my back.", w:{physical:-1}},
+  {t:"I want my knees and shoulders working at 55", w:{physical:-3,tech:2,precision:1}}
+ ]},
+
+{q:"Same job site for eight straight months, or three different jobs a day?",
+ o:[
+  {t:"Three a day. New problem every time.", w:{travel:4,people:2,routine:-2}},
+  {t:"Lean toward variety", w:{travel:2}},
+  {t:"Lean toward one long project", w:{travel:-2,team:1}},
+  {t:"One big build, start to finish, watching it go up", w:{travel:-3,team:2,craft:2}}
+ ]},
+
+{q:"Real danger: high voltage, heavy steel, working over open air.",
+ o:[
+  {t:"Respect it, don't fear it. That's what training and procedure are for.", w:{risk:4,heights:1}},
+  {t:"I'm fine with risk when I'm properly trained", w:{risk:2}},
+  {t:"I'd prefer the lower-risk version of the job", w:{risk:-2}},
+  {t:"Coming home in one piece is my number one factor", w:{risk:-4}}
+ ]},
+
+{q:"At the end of it, what do you want to be able to point at?",
+ o:[
+  {t:"A building I helped put up", w:{craft:2,team:2,physical:2,outdoor:1}},
+  {t:"A machine I brought back to life", w:{machines:4,diagnose:2}},
+  {t:"A part I cut out of a solid block of metal", w:{precision:4,craft:2,machines:1}},
+  {t:"A system nobody notices, because I made sure it never fails", w:{tech:3,routine:2,diagnose:1}}
+ ]},
+
+{q:"Travel work: weeks away from home, but the money is significantly better.",
+ o:[
+  {t:"Take the money. I'm young and I can go anywhere.", w:{travel:4,risk:1,routine:-2}},
+  {t:"Now and then, sure", w:{travel:2}},
+  {t:"I'd rather stay within driving distance", w:{travel:-2}},
+  {t:"Home every night matters more than the paycheck", w:{travel:-4,routine:2}}
+ ]},
+
+{q:"Who's around you while you work?",
+ o:[
+  {t:"Nobody. Me, my tools, my pace.", w:{team:-4,people:-1}},
+  {t:"Mostly me, with a partner sometimes", w:{team:-2}},
+  {t:"A tight crew of two or three", w:{team:2}},
+  {t:"A big crew, everybody moving, lots of coordination", w:{team:4,people:1}}
+ ]},
+
+{q:"Which of these would you actually enjoy learning inside and out?",
+ o:[
+  {t:"How electricity moves through a building, and every code rule that governs it", w:{tech:4,precision:2,diagnose:1}},
+  {t:"How water, gas, waste, and drainage systems really work", w:{diagnose:2,grit:3,people:1,physical:1}},
+  {t:"How heating, cooling, and refrigeration equipment works and why it fails", w:{tech:2,diagnose:3,machines:1,people:1}},
+  {t:"How metal behaves when you heat it, cut it, and join it", w:{precision:3,machines:2,craft:2}}
+ ]},
+
+{q:"Which tool would you most want to genuinely master?",
+ o:[
+  {t:"A multimeter, reading what's happening inside a system", w:{tech:4,diagnose:3}},
+  {t:"A TIG torch, laying a bead so clean it looks machined", w:{precision:4,craft:2,machines:1}},
+  {t:"An excavator or a crane, moving something enormous by feel", w:{machines:2,outdoor:3,team:1,physical:-1}},
+  {t:"A framing nailer and a saw, turning lumber into structure", w:{craft:4,physical:2,outdoor:1}}
+ ]},
+
+{q:"Be honest about detail.",
+ o:[
+  {t:"I notice tiny mistakes other people walk right past", w:{precision:4}},
+  {t:"I'm pretty detail-oriented when it matters", w:{precision:2}},
+  {t:"I care more about getting it done and done solid", w:{precision:-1,physical:2}},
+  {t:"Big picture and speed. Perfect is the enemy of finished.", w:{precision:-3,physical:2,team:1}}
+ ]},
+
+{q:"Predictable days or unpredictable ones?",
+ o:[
+  {t:"No two days alike. Boredom is the actual enemy.", w:{routine:-4,diagnose:2,travel:1}},
+  {t:"Some variety keeps it interesting", w:{routine:-2}},
+  {t:"Mostly predictable with occasional curveballs", w:{routine:2}},
+  {t:"Same process, done right, every single time", w:{routine:4,precision:2}}
+ ]},
+
+{q:"What would actually make you quit a job?",
+ o:[
+  {t:"Being bored out of my mind", w:{routine:-3,diagnose:2}},
+  {t:"Watching my body break down before I'm 40", w:{physical:-3,tech:2}},
+  {t:"Being stuck inside under a ceiling all day", w:{outdoor:4}},
+  {t:"No clear path to making more money", w:{business:4,travel:1}}
+ ]}
+];
+
+/* ============================================================
+   TRADE PROFILES  (0-10 on each trait; 5 = neutral)
+   ============================================================ */
+const TRADES = [
+{
+ id:"electrician", name:"Electrician", tag:"Power, controls, and code: the trade with the widest ceiling",
+ p:{outdoor:5,heights:6,physical:5,precision:7,diagnose:9,machines:5,people:6,travel:6,business:7,tech:9,grit:5,routine:5,risk:6,craft:6,team:6},
+ pay:"$62,350", top:"$106,030", outlook:"9% growth through 2034, much faster than average",
+ path:"High school diploma, then a 4-5 year apprenticeship. You're paid from day one and your wage steps up roughly every six months. Union (IBEW/JATC) or a non-union contractor program.",
+ day:"Pulling and terminating wire, reading prints, bending conduit, troubleshooting circuits that don't work. Resi, commercial, and industrial are three very different lives, and industrial and controls work pays the most.",
+ body:"Moderate. Ladders, kneeling, overhead work, some heavy pulls. Easier on the body than most trades.",
+ watch:"The apprenticeship is genuinely competitive and there's real classroom work and code study. If you hate studying, this one will grind you."
+},
+{
+ id:"plumber", name:"Plumber / Pipefitter", tag:"Systems everyone needs and nobody else wants to touch",
+ p:{outdoor:5,heights:4,physical:7,precision:6,diagnose:8,machines:5,people:7,travel:7,business:8,tech:5,grit:9,routine:4,risk:4,craft:6,team:5},
+ pay:"$62,970", top:"$105,150", outlook:"4% growth through 2034, about average",
+ path:"4- or 5-year paid apprenticeship. Most states require a license, which means logged hours plus an exam. Pipefitting and steamfitting are the higher-paid industrial cousins.",
+ day:"Rough-in on new construction, service calls on old houses, drain and gas work, reading plans, sweating and pressing pipe. Service plumbers who are good with people make very good money.",
+ body:"Hard. Crawlspaces, trenches, awkward positions, heavy cast iron. Real wear over decades.",
+ watch:"Yes, the gross stuff is real. Also: this is one of the easiest trades to eventually run as your own business, which is where the big money actually is."
+},
+{
+ id:"hvac", name:"HVAC / Refrigeration Tech", tag:"Diagnostics, electronics, and constant customer contact",
+ p:{outdoor:6,heights:5,physical:6,precision:6,diagnose:9,machines:7,people:8,travel:8,business:8,tech:8,grit:7,routine:4,risk:4,craft:4,team:4},
+ pay:"$59,810", top:"$91,020", outlook:"8% growth through 2034, much faster than average",
+ path:"Fastest entry on this list: a 6-month to 2-year trade school program plus EPA 608 certification, or an apprenticeship. You can be earning inside a year.",
+ day:"Service calls all day: diagnosing why a system isn't cooling, charging refrigerant, replacing compressors and boards, installing new equipment. Heavy on electrical troubleshooting.",
+ body:"Moderate to hard. Attics in July, roofs, crawlspaces, hauling equipment. The seasons are brutal at both ends.",
+ watch:"Commercial refrigeration and controls pay far better than residential change-outs. Aim there. Summer overtime is enormous; winter can be slow in some markets."
+},
+{
+ id:"welder", name:"Welder / Fabricator", tag:"A skill you own, that travels anywhere",
+ p:{outdoor:6,heights:6,physical:6,precision:9,diagnose:5,machines:7,people:3,travel:7,business:6,tech:5,grit:8,routine:6,risk:6,craft:8,team:4},
+ pay:"$51,000", top:"$75,850", outlook:"2% growth through 2034, slower than average",
+ path:"Technical school (6-18 months) plus on-the-job training. What actually matters is certifications: 6G pipe, structural, TIG on exotic alloys. Certs are the whole ballgame.",
+ day:"Reading a print, fitting up, and laying beads that will be X-rayed. Shop fabrication is steady and indoors; field, pipeline, and rig welding is where the huge paychecks are.",
+ body:"Moderate to hard. Long periods in fixed positions, heat, heavy plate. Eye and lung protection is not optional.",
+ watch:"The median is deceptive. A certified pipe welder willing to travel makes multiples of it; a production welder in a shop plateaus fast. Your income here is a direct function of your certs and your willingness to go where the work is."
+},
+{
+ id:"carpenter", name:"Carpenter", tag:"The most visible, most tangible thing you can build",
+ p:{outdoor:7,heights:6,physical:8,precision:7,diagnose:5,machines:5,people:6,travel:6,business:8,tech:4,grit:6,routine:4,risk:5,craft:10,team:6},
+ pay:"$59,310", top:"$98,370", outlook:"4% growth through 2034, about average",
+ path:"Apprenticeship (union carpenters' council or a contractor), or start as a laborer and learn. Easiest trade to get a first job in; hardest to get truly good at.",
+ day:"Framing, forms, layout, finish work, trim, cabinets. Rough carpentry is speed and structure; finish carpentry is patience and a sixteenth of an inch.",
+ body:"Hard. Constant lifting, climbing, kneeling, and weather.",
+ watch:"Also one of the easiest trades to start your own business in, and one of the easiest to underprice yourself into the ground. Learn the business side early."
+},
+{
+ id:"lineman", name:"Power Lineman", tag:"Top pay, top risk, outside no matter what the sky is doing",
+ p:{outdoor:10,heights:10,physical:9,precision:6,diagnose:7,machines:6,people:3,travel:8,business:3,tech:7,grit:9,routine:3,risk:10,craft:4,team:8},
+ pay:"$92,560", top:"$126,610", outlook:"7% growth through 2034, much faster than average",
+ path:"High school diploma plus a utility or IBEW apprenticeship up to 3 years. Many start with a 15-week lineman school to get hired as a groundman. Extremely competitive intake.",
+ day:"Climbing poles and working out of buckets on energized distribution lines. Storm season means being called out at 2 a.m. and working 16-hour days for two weeks straight.",
+ body:"Very demanding. Climbing with heavy gear, all weather, all hours.",
+ watch:"This is the most genuinely dangerous job on this list. Energized high voltage does not give you a second chance. The pay reflects that, and so does the overtime, since many linemen clear well past six figures. Storm work will own your calendar."
+},
+{
+ id:"elevator", name:"Elevator Installer / Repairer", tag:"The highest-paid trade in America, and the hardest to get into",
+ p:{outdoor:3,heights:9,physical:6,precision:9,diagnose:9,machines:8,people:4,travel:5,business:3,tech:9,grit:5,routine:6,risk:7,craft:5,team:6},
+ pay:"$106,580", top:"$149,250", outlook:"5% growth through 2034, faster than average",
+ path:"4-year IUEC apprenticeship. Applications open on limited windows, there's an aptitude test and interview, and thousands apply for a handful of slots. Worth applying every single cycle.",
+ day:"Installing and maintaining elevators and escalators: mechanical assembly, hydraulics, and increasingly a lot of electronic controls and software diagnostics. Mostly maintenance and modernization after the install boom.",
+ body:"Moderate. Hoistways, confined spaces, and heights, but not a body-destroyer.",
+ watch:"The barrier to entry is the whole story. If you can get in, you have arguably the best trade job in the country. Apply young, keep applying, and take any related experience in the meantime."
+},
+{
+ id:"diesel", name:"Diesel / Heavy Equipment Technician", tag:"Big engines, big systems, constant diagnostics",
+ p:{outdoor:5,heights:3,physical:7,precision:6,diagnose:9,machines:10,people:4,travel:4,business:6,tech:7,grit:10,routine:5,risk:4,craft:4,team:4},
+ pay:"$60,640", top:"$85,980", outlook:"2% growth through 2034, slower than average",
+ path:"High school diploma plus on-the-job training; a 1-2 year diesel program gets you hired faster and higher. Manufacturer certifications (Cat, Cummins, Detroit) raise your pay directly.",
+ day:"Diagnosing and rebuilding engines, transmissions, hydraulics, and emissions systems on trucks and heavy equipment. Laptop diagnostics is now half the job.",
+ body:"Hard on the hands and back. Heavy components, awkward reaches, and permanent grease.",
+ watch:"Where you work changes everything: dealership, fleet, mining, or field service. Field service techs and mining techs earn far more than the median. Tool costs are real, so budget for them."
+},
+{
+ id:"auto", name:"Automotive Technician", tag:"Fast entry, computer-heavy, pay depends entirely on where you land",
+ p:{outdoor:3,heights:2,physical:5,precision:6,diagnose:9,machines:10,people:6,travel:2,business:7,tech:7,grit:9,routine:5,risk:3,craft:4,team:4},
+ pay:"$49,670", top:"$80,850", outlook:"4% growth through 2034, about average",
+ path:"A postsecondary auto tech program (often under 2 years), then on-the-job training. ASE certifications are the currency. Manufacturer training (BMW, Toyota, Tesla) raises your ceiling a lot.",
+ day:"Diagnostics, repairs, and maintenance, increasingly electrical and software work rather than purely mechanical. Most shops pay flat rate, meaning you're paid per job, not per hour.",
+ body:"Moderate. Standing all day, awkward positions, some heavy lifting.",
+ watch:"The honest downside: it's the lowest median on this list, you buy your own tools (thousands of dollars), and flat rate punishes you on slow weeks. The honest upside: master techs at good dealerships and EV specialists do very well."
+},
+{
+ id:"machinist", name:"CNC Machinist / Tool & Die", tag:"Indoor, clean-ish, and obsessively precise",
+ p:{outdoor:1,heights:1,physical:3,precision:10,diagnose:6,machines:8,people:3,travel:2,business:5,tech:8,grit:5,routine:9,risk:2,craft:7,team:3},
+ pay:"$57,700", top:"$78,760 (machinists) / $87,660 (tool & die)", outlook:"-2% through 2034, slight decline",
+ path:"High school diploma plus on-the-job training, a machining certificate, or a multi-year apprenticeship. Tool and die is the higher-skill, higher-paid branch.",
+ day:"Reading blueprints, setting up and programming CNC mills and lathes, holding tolerances measured in ten-thousandths, inspecting your own work. Aerospace and medical shops are the premium end.",
+ body:"Easy on the body compared to the rest of this list. Standing, but climate-controlled and indoors.",
+ watch:"Employment is projected to shrink slightly as automation spreads, but the people who program and set up the machines are the ones automation needs. Learn CAM programming, not just button-pushing."
+},
+{
+ id:"operator", name:"Heavy Equipment Operator", tag:"Outdoors, seated, moving enormous things by feel",
+ p:{outdoor:10,heights:3,physical:3,precision:6,diagnose:3,machines:9,people:3,travel:7,business:5,tech:3,grit:6,routine:6,risk:5,craft:5,team:6},
+ pay:"$58,320", top:"$99,930", outlook:"4% growth through 2034, about average",
+ path:"On-the-job training, a vocational program, or a 3-4 year apprenticeship (Operating Engineers). Many start as laborers or oilers and move into the seat.",
+ day:"Running excavators, dozers, loaders, graders, and cranes. Grading to a print, digging to depth, feeding a crew. Crane operators are a separate certified track with much higher pay.",
+ body:"Lighter than most trades once you're in the seat, but seat time is hard on your back, and you'll still be greasing and maintaining the machine.",
+ watch:"Work is seasonal and weather-dependent in a lot of the country. Get certified on a crane if you want the top of this range."
+},
+{
+ id:"mason", name:"Mason / Bricklayer", tag:"Pure craft, pure labor, permanent results",
+ p:{outdoor:9,heights:5,physical:10,precision:7,diagnose:2,machines:2,people:5,travel:6,business:7,tech:2,grit:8,routine:6,risk:4,craft:9,team:6},
+ pay:"$56,600 (brickmasons $60,800)", top:"$90,120", outlook:"2% growth through 2034, slower than average",
+ path:"Apprenticeship or start as a mason tender (mixing mud, hauling block) and work up. Entry is easy; skill takes years.",
+ day:"Laying brick, block, and stone to line and level. Restoration work on old buildings is a specialized, well-paid niche.",
+ body:"The hardest physical job on this list. Thousands of pounds of material through your hands every day, in the sun.",
+ watch:"Fewer young people enter masonry every year, which makes skilled masons valuable and makes owning a masonry business realistic. But be clear-eyed: this trade asks the most from your body."
+},
+{
+ id:"ironworker", name:"Ironworker", tag:"Steel, heights, and the crew that raises the skyline",
+ p:{outdoor:10,heights:10,physical:10,precision:5,diagnose:3,machines:4,people:3,travel:9,business:3,tech:3,grit:9,routine:4,risk:10,craft:6,team:9},
+ pay:"$61,940 (structural $62,700)", top:"$107,520", outlook:"4% growth through 2034, about average",
+ path:"3- or 4-year paid apprenticeship: 144 classroom hours plus 2,000 hours of paid work per year. Ironworkers Local halls are the main door in.",
+ day:"Connecting structural steel, tying rebar, rigging loads, welding and bolting up. Structural, reinforcing, and ornamental are three different tracks.",
+ body:"Brutally demanding. Heavy steel, heights, cold, and constant movement.",
+ watch:"One of the most dangerous trades, and the work follows big projects, so expect travel and expect layoffs between jobs. The camaraderie is legendary and the pride is real."
+},
+{
+ id:"millwright", name:"Industrial Maintenance Tech / Millwright", tag:"Keeping entire plants running, and the fastest-growing trade here",
+ p:{outdoor:3,heights:5,physical:6,precision:8,diagnose:10,machines:10,people:4,travel:3,business:4,tech:8,grit:8,routine:4,risk:5,craft:5,team:5},
+ pay:"$63,510 (millwrights $65,170)", top:"$91,620", outlook:"13% growth through 2034, much faster than average",
+ path:"Industrial maintenance techs need a year or more of on-the-job training and often a 1-2 year technical program; millwrights typically do a 3-4 year apprenticeship.",
+ day:"Diagnosing and repairing production machinery, motors, hydraulics, pneumatics, conveyors, and increasingly PLCs and automation. When the line is down, the whole plant is waiting on you.",
+ body:"Moderate to hard. Indoors, but hot, loud, dirty, and often on your back under a machine.",
+ watch:"The best-kept secret on this list. 13% projected growth is the highest here, because every automated factory needs someone who can fix the robots. Learn PLCs and you become very hard to replace."
+},
+{
+ id:"aircraft", name:"Aircraft Mechanic (A&P)", tag:"Highest-paid technician work, with zero tolerance for shortcuts",
+ p:{outdoor:4,heights:4,physical:5,precision:10,diagnose:9,machines:9,people:3,travel:3,business:3,tech:9,grit:6,routine:8,risk:4,craft:6,team:6},
+ pay:"$79,140 (aircraft mechanics $78,680)", top:"$120,080", outlook:"5% growth through 2034, faster than average",
+ path:"An FAA-approved Part 147 school (typically 18-24 months) to earn your Airframe & Powerplant certificate. Military aviation experience is another route.",
+ day:"Inspecting, troubleshooting, and repairing aircraft systems to FAA standards, with documentation for every single thing you touch. Airlines, corporate aviation, and MRO shops.",
+ body:"Moderate. Hangar work, ladders and stands, confined spaces in fuselages.",
+ watch:"Paperwork and procedure are as much the job as wrenching, and there is no 'good enough.' If that discipline appeals to you, it's one of the best-paid technical trades in the country. Airline seniority also brings flight benefits."
+},
+{
+ id:"sheetmetal", name:"Sheet Metal Worker", tag:"Layout, fabrication, and install: an underrated union trade",
+ p:{outdoor:5,heights:6,physical:6,precision:9,diagnose:4,machines:6,people:4,travel:6,business:6,tech:5,grit:5,routine:6,risk:5,craft:7,team:6},
+ pay:"$60,850", top:"$102,680", outlook:"2% growth through 2034, slower than average",
+ path:"4- or 5-year apprenticeship, most commonly through SMART (the sheet metal union). Paid from day one with strong benefits.",
+ day:"Fabricating and installing ductwork, architectural metal, roofing, and industrial sheet metal. Half shop fabrication, half field install. Heavy on layout math and reading prints.",
+ body:"Moderate to hard. Overhead install work, ladders, lifts, and sharp edges everywhere.",
+ watch:"Less known than electrical or plumbing, which means less competition for apprenticeships. Testing-and-balancing and architectural metal specialists earn well above the median."
+}
+];
+
+/* ============================================================
+   ENGINE
+   ============================================================ */
+const $ = id => document.getElementById(id);
+let idx = 0;
+const answers = new Array(QUESTIONS.length).fill(null);
+
+// max possible absolute score per trait (for normalizing the user vector)
+const MAXT = {};
+TRAITS.forEach(t => {
+  let m = 0;
+  QUESTIONS.forEach(q => {
+    let best = 0;
+    q.o.forEach(o => { best = Math.max(best, Math.abs(o.w[t] || 0)); });
+    m += best;
+  });
+  MAXT[t] = m || 1;
+});
+
+// Trades are scored against how far they sit from the AVERAGE trade on each
+// trait, not from a fixed midpoint. Without this, "moderate on everything"
+// trades win almost every quiz and the distinctive ones never surface.
+const MU = {}, SD = {};
+TRAITS.forEach(t => {
+  const v = TRADES.map(x => x.p[t]);
+  const m = v.reduce((a,b)=>a+b,0) / v.length;
+  MU[t] = m;
+  SD[t] = Math.sqrt(v.reduce((a,b)=>a+(b-m)*(b-m),0)/v.length) || 1;
+});
+const cval = (tr,t) => (tr.p[t] - MU[t]) / SD[t] / 2;
+
+function render(){
+  const q = QUESTIONS[idx];
+  $("qnum").textContent = "Question " + (idx+1);
+  $("qtext").textContent = q.q;
+  $("plabel").textContent = "Question " + (idx+1) + " of " + QUESTIONS.length;
+  const pct = Math.round((idx)/QUESTIONS.length*100);
+  $("ppct").textContent = pct + "%";
+  $("pfill").style.width = pct + "%";
+
+  const box = $("opts");
+  box.innerHTML = "";
+  q.o.forEach((o,i) => {
+    const b = document.createElement("button");
+    b.className = "opt" + (answers[idx]===i ? " sel" : "");
+    b.innerHTML = '<span class="k">'+"ABCD"[i]+'</span><span class="txt">' + o.t + '</span>';
+    b.onclick = () => {
+      answers[idx] = i;
+      render();
+      setTimeout(advance, 190);
+    };
+    box.appendChild(b);
+  });
+
+  $("back").disabled = idx === 0;
+  $("next").disabled = answers[idx] === null;
+  $("next").textContent = idx === QUESTIONS.length-1 ? "See my results →" : "Next →";
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+function advance(){
+  if (answers[idx] === null) return;
+  if (idx < QUESTIONS.length-1){ idx++; render(); }
+  else finish();
+}
+
+function computeTraits(){
+  const u = {}; TRAITS.forEach(t => u[t]=0);
+  QUESTIONS.forEach((q,i) => {
+    const a = answers[i];
+    if (a === null) return;
+    const w = q.o[a].w;
+    for (const k in w) u[k] += w[k];
+  });
+  const n = {};
+  TRAITS.forEach(t => { n[t] = Math.max(-1, Math.min(1, u[t]/MAXT[t])); });
+  return {raw:u, norm:n};
+}
+
+function scoreTrades(n){
+  return TRADES.map(tr => {
+    let dot = 0, mag = 0;
+    TRAITS.forEach(t => {
+      const c = cval(tr,t);
+      dot += n[t] * c;
+      mag += Math.abs(c);
+    });
+    const ratio = dot / (mag || 1);                       // -1..1
+    const pct = Math.max(5, Math.min(98, 50 + 62 * ratio));
+    return {tr, pct, ratio};
+  }).sort((a,b) => b.pct - a.pct);
+}
+
+// which traits of the user most drove this match
+function reason(tr, n){
+  const LABEL = {
+    outdoor:"you want to be outside", heights:"heights don't scare you", physical:"you want physical work",
+    precision:"you're precise and detail-driven", diagnose:"you like troubleshooting puzzles",
+    machines:"you're drawn to machines and engines", people:"you're good with people",
+    travel:"you want variety and movement", business:"you want to own something someday",
+    tech:"you like systems, electronics, and math", grit:"dirty and awkward work doesn't bother you",
+    routine:"you want a consistent, repeatable day", risk:"you can handle real risk",
+    craft:"you want to point at something you built", team:"you want to work as part of a crew"
+  };
+  const NEG = {
+    outdoor:"you'd rather work indoors", heights:"you want your feet on the ground",
+    physical:"you want to protect your body long-term", precision:"you value speed over perfection",
+    diagnose:"you'd rather build than diagnose", machines:"machines aren't your draw",
+    people:"you'd rather not deal with customers", travel:"you want to be home every night",
+    business:"you want a steady job, not a business", tech:"you'd rather use your hands than a calculator",
+    grit:"you'd rather stay clean", routine:"you'd go crazy doing the same thing daily",
+    risk:"safety is a priority for you", craft:"the finished object isn't the point for you",
+    team:"you'd rather work on your own"
+  };
+  const contrib = TRAITS.map(t => {
+    const c = cval(tr,t);
+    return {t, v: n[t]*c, pos: n[t] >= 0};
+  }).filter(x => x.v > 0.05).sort((a,b) => b.v - a.v).slice(0,3);
+  if (!contrib.length) return "This one lines up with your overall profile more than the rest.";
+  const parts = contrib.map(x => x.pos ? LABEL[x.t] : NEG[x.t]);
+  return "Matched because " + parts.slice(0,-1).join(", ") + (parts.length>1 ? ", and " : "") + parts[parts.length-1] + ".";
+}
+
+function profileLine(n){
+  const strong = TRAITS.map(t => ({t, v:n[t]})).sort((a,b)=>Math.abs(b.v)-Math.abs(a.v)).slice(0,4);
+  const say = {
+    outdoor:[ "outdoors", "indoors" ], heights:[ "comfortable at height", "ground-level" ],
+    physical:[ "physically demanding", "easier on the body" ], precision:[ "precision-focused", "speed-focused" ],
+    diagnose:[ "diagnostic", "hands-on-building" ], machines:[ "machine-driven", "not machine-focused" ],
+    people:[ "people-facing", "heads-down" ], travel:[ "always-moving", "stay-local" ],
+    business:[ "entrepreneurial", "steady-employment" ], tech:[ "technical and systems-minded", "low-tech" ],
+    grit:[ "unbothered by mess", "clean-environment" ], routine:[ "consistent and structured", "never-the-same-twice" ],
+    risk:[ "risk-tolerant", "safety-first" ], craft:[ "craft-driven", "function-over-finish" ],
+    team:[ "crew-oriented", "independent" ]
+  };
+  const words = strong.map(s => say[s.t][s.v >= 0 ? 0 : 1]);
+  return "Your profile reads as " + words.slice(0,-1).join(", ") + ", and " + words[words.length-1] + ". Here's what that points at.";
+}
+
+function finish(){
+  const {norm} = computeTraits();
+  const ranked = scoreTrades(norm);
+
+  $("pfill").style.width = "100%";
+  $("quiz").classList.add("hidden");
+  $("results").classList.remove("hidden");
+
+  $("verdict").textContent = "Your top match: " + ranked[0].tr.name;
+  let line = profileLine(norm);
+  if (ranked[0].pct < 63){
+    line += " Heads up: your answers didn't lean hard in any one direction, so these three are close. That's not a bad sign. It means several of these could work, and shadowing a day on each will tell you more than any quiz can.";
+  }
+  $("profile").textContent = line;
+
+  const ORD = ["Best fit","2nd","3rd"];
+  $("top3").innerHTML = ranked.slice(0,3).map((r,i) => {
+    const t = r.tr;
+    const pct = Math.round(r.pct);
+    return `
+    <div class="rank ${i===0?"one":""}">
+      <div class="badge">${ORD[i]}</div>
+      <h3>${t.name}</h3>
+      <p class="tag">${t.tag}</p>
+      <div class="fitline">
+        <div class="fitbar"><span style="width:${pct}%"></span></div>
+        <div class="fitpct">${pct}% fit</div>
+      </div>
+      <div class="why"><b>Why:</b> ${reason(t, norm)}</div>
+      <div class="facts">
+        <div class="fact"><div class="l">Median pay</div><div class="v">${t.pay}<small>U.S. median, BLS May 2024</small></div></div>
+        <div class="fact"><div class="l">Top 10% earn more than</div><div class="v">${t.top}<small>before overtime</small></div></div>
+      </div>
+      <div class="rowlist">
+        <div><div class="l">Way in</div><div>${t.path}</div></div>
+        <div><div class="l">Day to day</div><div>${t.day}</div></div>
+        <div><div class="l">On your body</div><div>${t.body}</div></div>
+        <div><div class="l">Outlook</div><div>${t.outlook}</div></div>
+      </div>
+      <div class="warn"><b>Before you commit:</b> ${t.watch}</div>
+      ${i===0?`
+      <div class="next">
+        <div class="l">Next step</div>
+        <p>Spend a month on the job with a working ${t.name.split("/")[0].split("(")[0].trim().toLowerCase()} before you commit to school. They earn a second income. You get the truth about the craft for a fraction of tuition.</p>
+        <button class="btn small" type="button">Get paired with a local pro →</button><span class="soon">Pilot coming to Chicago</span>
+      </div>`:""}
+    </div>`;
+  }).join("");
+
+  const max = ranked[0].pct || 1;
+  $("allrows").innerHTML = ranked.map((r,i) => {
+    const pct = Math.round(r.pct);
+    return `<div class="allrow">
+      <div class="n">${i+1}</div>
+      <div class="nm">${r.tr.name}</div>
+      <div class="bb"><span style="width:${Math.round(pct/max*100)}%"></span></div>
+      <div class="pp">${pct}%</div>
+    </div>`;
+  }).join("");
+
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+
+$("start").onclick = () => {
+  $("intro").classList.add("hidden");
+  $("quiz").classList.remove("hidden");
+  render();
+};
+$("next").onclick = advance;
+$("back").onclick = () => { if (idx>0){ idx--; render(); } };
+$("again").onclick = () => {
+  idx = 0; answers.fill(null);
+  $("results").classList.add("hidden");
+  $("intro").classList.remove("hidden");
+  window.scrollTo({top:0,behavior:"smooth"});
+};
+$("print").onclick = () => window.print();
+
+// keyboard: A/B/C/D and 1-4
+document.addEventListener("keydown", e => {
+  if ($("quiz").classList.contains("hidden")) return;
+  const map = {a:0,b:1,c:2,d:3,"1":0,"2":1,"3":2,"4":3};
+  const k = e.key.toLowerCase();
+  if (k in map && map[k] < QUESTIONS[idx].o.length){
+    answers[idx] = map[k]; render(); setTimeout(advance,190);
+  }
+  if (e.key === "ArrowRight") advance();
+  if (e.key === "ArrowLeft" && idx>0){ idx--; render(); }
+});
+</script>
+</body>
+</html>
